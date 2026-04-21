@@ -264,7 +264,70 @@
 
     footer { text-align: center; padding: 1.5rem; font-size: 11px; color: var(--muted); border-top: 1px solid var(--border); margin-top: 1rem; }
 
-    @media (max-width: 720px) { .container { grid-template-columns: 1fr; } nav { display: none; } }
+    /* Mobilní navigační lišta – skrytá na desktopu */
+    .mobile-nav { display: none; }
+
+    @media (max-width: 720px) {
+      .container {
+        grid-template-columns: 1fr;
+        padding: 0.875rem 0.75rem;
+        padding-bottom: 5.5rem;
+      }
+
+      header { padding: 0 1rem; }
+      nav { display: none; }
+
+      /* Zápasové karty */
+      .match-card { padding: 0.6rem 0.75rem; gap: 8px; }
+      .team { font-size: 13px; gap: 6px; }
+      .team-crest { width: 20px; height: 20px; }
+      .team-crest-placeholder { width: 20px; height: 20px; }
+      .score { font-size: 19px; }
+
+      /* Modal – sheet zespodu */
+      .modal-overlay { align-items: flex-end; }
+      .modal {
+        width: 100%;
+        max-width: 100%;
+        max-height: 92vh;
+        border-radius: 14px 14px 0 0;
+      }
+
+      footer { margin-bottom: 4rem; }
+
+      /* Spodní navigační lišta */
+      .mobile-nav {
+        display: flex;
+        position: fixed;
+        bottom: 0; left: 0; right: 0;
+        height: 56px;
+        background: var(--dark2);
+        border-top: 1px solid var(--border);
+        z-index: 100;
+      }
+
+      .mobile-nav a {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3px;
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+        text-transform: uppercase;
+        transition: color 0.15s;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      .mobile-nav a.active,
+      .mobile-nav a:active { color: #fff; }
+
+      .mobile-nav-icon { font-size: 17px; line-height: 1; }
+    }
   </style>
 </head>
 <body>
@@ -288,11 +351,11 @@
 </div>
 
 <div class="container">
-  <main id="matches-col">
+  <main id="matches-col" data-section="výsledky">
     <div class="loading"><div class="spinner"></div>Připojuji se k serveru...</div>
   </main>
 
-  <aside class="sidebar">
+  <aside class="sidebar" id="sidebar">
 
     <div class="widget">
       <div class="widget-header" onclick="toggleWidget('pl')">
@@ -397,6 +460,21 @@
 <footer>
   Data: <a href="https://www.football-data.org" style="color:var(--muted)">football-data.org</a> &nbsp;·&nbsp; GoalCZ © 2026
 </footer>
+
+<nav class="mobile-nav">
+  <a href="#matches-col" class="active" id="mnav-results">
+    <span class="mobile-nav-icon">📺</span>
+    <span>Výsledky</span>
+  </a>
+  <a href="#sidebar" id="mnav-tables">
+    <span class="mobile-nav-icon">📊</span>
+    <span>Tabulky</span>
+  </a>
+  <a href="#" id="mnav-schedule">
+    <span class="mobile-nav-icon">📅</span>
+    <span>Program</span>
+  </a>
+</nav>
 
 <script>
   const SERVER = '';
@@ -567,6 +645,19 @@
   }
 
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  // Aktivní stav spodní lišty podle scroll pozice
+  const mnavResults  = document.getElementById('mnav-results');
+  const mnavTables   = document.getElementById('mnav-tables');
+  if (mnavResults && mnavTables) {
+    window.addEventListener('scroll', () => {
+      const sidebar = document.getElementById('sidebar');
+      if (!sidebar) return;
+      const atTables = window.scrollY >= sidebar.offsetTop - 80;
+      mnavResults.classList.toggle('active', !atTables);
+      mnavTables.classList.toggle('active', atTables);
+    }, { passive: true });
+  }
 
   // Spustit
   loadMatches();

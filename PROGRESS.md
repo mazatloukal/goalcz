@@ -24,6 +24,8 @@ Frontend načítá data z localhost:3000.
 - Tabulky: Premier League (id 2021), Bundesliga (id 2002), La Liga (id 2014)
 - Barvy: zelená = pohárová Evropa, červená = sestup
 
+- Mobilní optimalizace (spodní navigace, touch targets, bottom-sheet modal, padding)
+
 ## Další kroky (nápady)
 - Hosting na Railway.app aby web běžel veřejně 24/7
 - Přidat stránku /program se zápasy na příštích 7 dní
