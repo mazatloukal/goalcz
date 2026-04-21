@@ -342,6 +342,38 @@
       </div>
     </div>
 
+    <div class="widget">
+      <div class="widget-header" onclick="toggleWidget('sa')">
+        <div class="widget-header-left">
+          <span>Serie A</span>
+          <span style="font-size:10px;font-weight:400;opacity:0.6">2024/25</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="expand-link" onclick="event.stopPropagation();openModal(2019,'Serie A')">Celá tabulka ↗</span>
+          <i class="chevron open" id="chevron-sa">▼</i>
+        </div>
+      </div>
+      <div class="standings-body collapsed" id="body-sa">
+        <div class="loading"><div class="spinner"></div>Načítám...</div>
+      </div>
+    </div>
+
+    <div class="widget">
+      <div class="widget-header" onclick="toggleWidget('l1')">
+        <div class="widget-header-left">
+          <span>Ligue 1</span>
+          <span style="font-size:10px;font-weight:400;opacity:0.6">2024/25</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="expand-link" onclick="event.stopPropagation();openModal(2015,'Ligue 1')">Celá tabulka ↗</span>
+          <i class="chevron open" id="chevron-l1">▼</i>
+        </div>
+      </div>
+      <div class="standings-body collapsed" id="body-l1">
+        <div class="loading"><div class="spinner"></div>Načítám...</div>
+      </div>
+    </div>
+
   </aside>
 </div>
 
@@ -541,6 +573,8 @@
   loadStandings(2021, 'body-pl');
   loadStandings(2002, 'body-bl');
   loadStandings(2014, 'body-ll');
+  loadStandings(2019, 'body-sa');
+  loadStandings(2015, 'body-l1');
   setInterval(loadMatches, 60000);
 </script>
 </body>

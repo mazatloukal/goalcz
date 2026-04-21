@@ -4,7 +4,7 @@
 - Základní struktura projektu (server.js + index.html)
 - Node.js proxy server řeší CORS
 - Živé výsledky dnešních zápasů
-- Mini tabulky v sidebaru (Premier League, Bundesliga, La Liga)
+- Mini tabulky v sidebaru (Premier League, Bundesliga, La Liga, Serie A, Ligue 1)
 - Modal s celou tabulkou (1.–20. místo) — otevře se kliknutím na "Celá tabulka ↗"
 - Ticker s živými výsledky nahoře
 - Auto-refresh každých 60 sekund
