@@ -1,0 +1,12 @@
+{
+  "name": "goalcz",
+  "version": "1.0.0",
+  "description": "Živé fotbalové výsledky a tabulky",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
