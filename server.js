@@ -92,6 +92,20 @@ const server = http.createServer(async (req, res) => {
       }
       res.end(JSON.stringify(data));
 
+    } else if (pathname === '/team-matches') {
+      const id = url.searchParams.get('id');
+      const status = url.searchParams.get('status') || 'FINISHED';
+      const limit = url.searchParams.get('limit') || '5';
+      if (!id) { res.statusCode = 400; res.end(JSON.stringify({ error: 'Missing id' })); return; }
+      const cacheKey = `team_matches_${id}_${status}_${limit}`;
+      let data = getCache(cacheKey);
+      if (!data) {
+        data = await apiRequest(`/teams/${id}/matches?status=${status}&limit=${limit}`);
+        const ttl = status === 'FINISHED' ? 2 * 60 * 1000 : 10 * 60 * 1000;
+        setCache(cacheKey, data, ttl);
+      }
+      res.end(JSON.stringify(data));
+
     } else {
       res.statusCode = 404;
       res.end(JSON.stringify({ error: 'Not found' }));

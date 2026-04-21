@@ -58,9 +58,45 @@
       font-size: 15px;
     }
 
-    nav { display: flex; gap: 1.25rem; }
-    nav a { color: var(--muted); font-size: 13px; text-decoration: none; font-weight: 500; transition: color 0.15s; }
-    nav a:hover, nav a.active { color: #fff; }
+    /* Tabs v headeru */
+    .header-tabs {
+      display: flex;
+      gap: 2px;
+      height: 100%;
+      align-items: center;
+    }
+
+    .header-tab {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 6px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: color 0.15s, background 0.15s;
+      border: none;
+      background: none;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .header-tab:hover { color: #fff; background: rgba(255,255,255,0.05); }
+    .header-tab.active { color: #fff; background: rgba(255,255,255,0.08); }
+    .header-tab.active .tab-dot { opacity: 1; }
+
+    .tab-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--red);
+      animation: blink 1.2s ease infinite;
+      opacity: 0;
+    }
+    .tab-live .tab-dot { opacity: 1; }
 
     .live-badge { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; color: var(--red); text-transform: uppercase; letter-spacing: 0.8px; }
     .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--red); animation: blink 1.2s ease infinite; }
@@ -71,6 +107,7 @@
     .ticker-inner span { margin-right: 4rem; }
     @keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 
+    /* Hlavní layout */
     .container {
       max-width: 1080px;
       margin: 0 auto;
@@ -80,6 +117,18 @@
       gap: 1.25rem;
     }
 
+    /* Tabulky view – full width */
+    .container.tables-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .tables-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1rem;
+    }
+
+    /* Zápasové karty */
     .match-card {
       background: var(--dark2);
       border: 1px solid var(--border);
@@ -91,11 +140,24 @@
       gap: 12px;
       margin-bottom: 0.5rem;
       transition: border-color 0.15s;
+      cursor: pointer;
     }
     .match-card:hover { border-color: rgba(255,255,255,0.15); }
     .match-card.live { border-left: 3px solid var(--red); }
 
-    .team { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; }
+    .team {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: 5px;
+      padding: 2px 4px;
+      margin: -2px -4px;
+      transition: background 0.15s;
+    }
+    .team:hover { background: rgba(255,255,255,0.06); }
     .team.away { flex-direction: row-reverse; text-align: right; }
     .team-crest { width: 24px; height: 24px; object-fit: contain; }
     .team-crest-placeholder { width: 24px; height: 24px; border-radius: 50%; background: var(--dark3); display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--muted); }
@@ -108,6 +170,7 @@
 
     .competition-tag { display: inline-block; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); background: var(--dark3); padding: 2px 7px; border-radius: 4px; margin-bottom: 0.5rem; margin-top: 0.5rem; }
 
+    /* Sidebar */
     .sidebar { display: flex; flex-direction: column; gap: 1rem; }
 
     .widget { background: var(--dark2); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
@@ -169,6 +232,14 @@
     .relegation .pos { color: var(--red); }
     .relegation .pts { color: var(--red); }
 
+    /* Rozšířené standings v Tabulky view */
+    .widget-full .standings-row {
+      grid-template-columns: 26px 1fr 30px 30px 30px 30px 36px;
+      font-size: 13px;
+      padding: 9px 1.25rem;
+    }
+    .widget-full .standings-row.header { font-size: 11px; }
+
     .loading { text-align: center; padding: 2rem 1rem; color: var(--muted); font-size: 13px; }
     .spinner { width: 24px; height: 24px; border: 2px solid var(--border); border-top-color: var(--red); border-radius: 50%; animation: spin 0.7s linear infinite; margin: 0 auto 0.75rem; }
     @keyframes spin { to { transform: rotate(360deg); } }
@@ -177,7 +248,7 @@
     .no-matches { padding: 1.5rem 1rem; text-align: center; color: var(--muted); font-size: 13px; }
     .last-updated { font-size: 11px; color: var(--muted); text-align: right; margin-bottom: 0.5rem; }
 
-    /* MODAL */
+    /* MODAL – celá tabulka */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -262,9 +333,142 @@
     }
     .zdot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 5px; vertical-align: middle; }
 
+    /* TEAM DETAIL PANEL */
+    .team-panel-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+    }
+    .team-panel-overlay.open { display: block; }
+
+    .team-panel-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+    }
+
+    .team-panel {
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 380px;
+      max-width: 100vw;
+      background: var(--dark2);
+      border-left: 1px solid rgba(255,255,255,0.1);
+      overflow-y: auto;
+      animation: slideIn 0.25s ease;
+    }
+    @keyframes slideIn { from{transform:translateX(100%)} to{transform:translateX(0)} }
+
+    .team-panel-header {
+      padding: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: var(--dark2);
+      z-index: 1;
+    }
+
+    .team-panel-identity {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .team-panel-crest {
+      width: 44px;
+      height: 44px;
+      object-fit: contain;
+    }
+
+    .team-panel-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .team-panel-section {
+      padding: 1rem 1.25rem 0.5rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Forma – W/D/L kolečka */
+    .form-row {
+      display: flex;
+      gap: 6px;
+      padding: 1rem 1.25rem;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .form-badge {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .form-badge.W { background: #16a34a; color: #fff; }
+    .form-badge.D { background: var(--dark3); color: var(--muted); border: 1px solid var(--border); }
+    .form-badge.L { background: rgba(230,57,70,0.25); color: var(--red); }
+
+    /* Zápasy v panelu */
+    .panel-match {
+      padding: 0.75rem 1.25rem;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      transition: background 0.1s;
+    }
+    .panel-match:last-child { border-bottom: none; }
+    .panel-match:hover { background: rgba(255,255,255,0.03); }
+
+    .panel-team {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 500;
+    }
+    .panel-team.away { flex-direction: row-reverse; text-align: right; }
+    .panel-team.highlighted { color: #fff; font-weight: 600; }
+    .panel-crest { width: 18px; height: 18px; object-fit: contain; }
+
+    .panel-score-wrap { text-align: center; }
+    .panel-score {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+    }
+    .panel-score.win { color: #4ade80; }
+    .panel-score.draw { color: var(--muted); }
+    .panel-score.loss { color: var(--red); }
+    .panel-score.upcoming { color: var(--muted); font-size: 13px; letter-spacing: 0.5px; }
+    .panel-date { font-size: 10px; color: var(--muted); margin-top: 2px; }
+
     footer { text-align: center; padding: 1.5rem; font-size: 11px; color: var(--muted); border-top: 1px solid var(--border); margin-top: 1rem; }
 
-    /* Mobilní navigační lišta – skrytá na desktopu */
+    /* Mobilní navigační lišta */
     .mobile-nav { display: none; }
 
     @media (max-width: 720px) {
@@ -274,15 +478,21 @@
         padding-bottom: 5.5rem;
       }
 
-      header { padding: 0 1rem; }
-      nav { display: none; }
+      header { padding: 0 0.75rem; }
 
-      /* Zápasové karty */
+      .header-tab { font-size: 12px; padding: 5px 10px; letter-spacing: 0.5px; }
+
       .match-card { padding: 0.6rem 0.75rem; gap: 8px; }
       .team { font-size: 13px; gap: 6px; }
       .team-crest { width: 20px; height: 20px; }
       .team-crest-placeholder { width: 20px; height: 20px; }
       .score { font-size: 19px; }
+
+      /* Team panel – full screen na mobilu */
+      .team-panel {
+        width: 100%;
+        border-left: none;
+      }
 
       /* Modal – sheet zespodu */
       .modal-overlay { align-items: flex-end; }
@@ -295,7 +505,6 @@
 
       footer { margin-bottom: 4rem; }
 
-      /* Spodní navigační lišta */
       .mobile-nav {
         display: flex;
         position: fixed;
@@ -327,6 +536,10 @@
       .mobile-nav a:active { color: #fff; }
 
       .mobile-nav-icon { font-size: 17px; line-height: 1; }
+
+      .live-badge { display: none; }
+
+      .tables-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -334,12 +547,13 @@
 
 <header>
   <a class="logo" href="#"><div class="logo-icon">⚽</div>GoalCZ</a>
-  <nav>
-    <a href="#" class="active">Živé výsledky</a>
-    <a href="#">Tabulky</a>
-    <a href="#">Program</a>
-    <a href="#">Reprezentace</a>
-  </nav>
+  <div class="header-tabs">
+    <button class="header-tab tab-live active" id="tab-live" onclick="switchTab('live')">
+      <span class="tab-dot"></span>Live
+    </button>
+    <button class="header-tab" id="tab-dnes" onclick="switchTab('dnes')">Dnes</button>
+    <button class="header-tab" id="tab-tables" onclick="switchTab('tables')">Tabulky</button>
+  </div>
   <div class="live-badge"><span class="dot"></span> Live</div>
 </header>
 
@@ -350,13 +564,13 @@
   </div>
 </div>
 
-<div class="container">
-  <main id="matches-col" data-section="výsledky">
+<!-- Live + Dnes view -->
+<div class="container" id="view-matches">
+  <main id="matches-col">
     <div class="loading"><div class="spinner"></div>Připojuji se k serveru...</div>
   </main>
 
   <aside class="sidebar" id="sidebar">
-
     <div class="widget">
       <div class="widget-header" onclick="toggleWidget('pl')">
         <div class="widget-header-left">
@@ -364,7 +578,7 @@
           <span style="font-size:10px;font-weight:400;opacity:0.6">2024/25</span>
         </div>
         <div style="display:flex;align-items:center;gap:10px">
-          <span class="expand-link" onclick="event.stopPropagation();openModal(2021,'Premier League')">Celá tabulka ↗</span>
+          <span class="expand-link" onclick="event.stopPropagation();openModal(2021,'Premier League')">Celá ↗</span>
           <i class="chevron" id="chevron-pl">▼</i>
         </div>
       </div>
@@ -380,7 +594,7 @@
           <span style="font-size:10px;font-weight:400;opacity:0.6">2024/25</span>
         </div>
         <div style="display:flex;align-items:center;gap:10px">
-          <span class="expand-link" onclick="event.stopPropagation();openModal(2002,'Bundesliga')">Celá tabulka ↗</span>
+          <span class="expand-link" onclick="event.stopPropagation();openModal(2002,'Bundesliga')">Celá ↗</span>
           <i class="chevron" id="chevron-bl">▼</i>
         </div>
       </div>
@@ -396,7 +610,7 @@
           <span style="font-size:10px;font-weight:400;opacity:0.6">2024/25</span>
         </div>
         <div style="display:flex;align-items:center;gap:10px">
-          <span class="expand-link" onclick="event.stopPropagation();openModal(2014,'La Liga')">Celá tabulka ↗</span>
+          <span class="expand-link" onclick="event.stopPropagation();openModal(2014,'La Liga')">Celá ↗</span>
           <i class="chevron open" id="chevron-ll">▼</i>
         </div>
       </div>
@@ -412,7 +626,7 @@
           <span style="font-size:10px;font-weight:400;opacity:0.6">2024/25</span>
         </div>
         <div style="display:flex;align-items:center;gap:10px">
-          <span class="expand-link" onclick="event.stopPropagation();openModal(2019,'Serie A')">Celá tabulka ↗</span>
+          <span class="expand-link" onclick="event.stopPropagation();openModal(2019,'Serie A')">Celá ↗</span>
           <i class="chevron open" id="chevron-sa">▼</i>
         </div>
       </div>
@@ -428,7 +642,7 @@
           <span style="font-size:10px;font-weight:400;opacity:0.6">2024/25</span>
         </div>
         <div style="display:flex;align-items:center;gap:10px">
-          <span class="expand-link" onclick="event.stopPropagation();openModal(2015,'Ligue 1')">Celá tabulka ↗</span>
+          <span class="expand-link" onclick="event.stopPropagation();openModal(2015,'Ligue 1')">Celá ↗</span>
           <i class="chevron open" id="chevron-l1">▼</i>
         </div>
       </div>
@@ -436,11 +650,17 @@
         <div class="loading"><div class="spinner"></div>Načítám...</div>
       </div>
     </div>
-
   </aside>
 </div>
 
-<!-- MODAL -->
+<!-- Tabulky view -->
+<div class="container tables-layout" id="view-tables" style="display:none">
+  <div class="tables-grid" id="tables-grid">
+    <div class="loading"><div class="spinner"></div>Načítám tabulky...</div>
+  </div>
+</div>
+
+<!-- MODAL – celá tabulka -->
 <div class="modal-overlay" id="modal-overlay" onclick="closeModalOutside(event)">
   <div class="modal">
     <div class="modal-header">
@@ -457,22 +677,38 @@
   </div>
 </div>
 
+<!-- TEAM DETAIL PANEL -->
+<div class="team-panel-overlay" id="team-panel-overlay">
+  <div class="team-panel-backdrop" onclick="closeTeamPanel()"></div>
+  <div class="team-panel" id="team-panel">
+    <div class="team-panel-header">
+      <div class="team-panel-identity" id="panel-identity">
+        <div class="loading" style="padding:0"><div class="spinner" style="margin:0"></div></div>
+      </div>
+      <button class="modal-close" onclick="closeTeamPanel()">✕</button>
+    </div>
+    <div id="panel-body">
+      <div class="loading"><div class="spinner"></div>Načítám...</div>
+    </div>
+  </div>
+</div>
+
 <footer>
   Data: <a href="https://www.football-data.org" style="color:var(--muted)">football-data.org</a> &nbsp;·&nbsp; GoalCZ © 2026
 </footer>
 
 <nav class="mobile-nav">
-  <a href="#matches-col" class="active" id="mnav-results">
-    <span class="mobile-nav-icon">📺</span>
-    <span>Výsledky</span>
+  <a href="#" class="active" id="mnav-live" onclick="switchTab('live');return false">
+    <span class="mobile-nav-icon">🔴</span>
+    <span>Live</span>
   </a>
-  <a href="#sidebar" id="mnav-tables">
+  <a href="#" id="mnav-dnes" onclick="switchTab('dnes');return false">
+    <span class="mobile-nav-icon">📺</span>
+    <span>Dnes</span>
+  </a>
+  <a href="#" id="mnav-tables" onclick="switchTab('tables');return false">
     <span class="mobile-nav-icon">📊</span>
     <span>Tabulky</span>
-  </a>
-  <a href="#" id="mnav-schedule">
-    <span class="mobile-nav-icon">📅</span>
-    <span>Program</span>
   </a>
 </nav>
 
@@ -482,12 +718,45 @@
   const EURO_SPOTS  = { 2021:4, 2002:4, 2014:4, 2019:4, 2015:3 };
   const RELEGATION  = { 2021:3, 2002:3, 2014:3, 2019:3, 2015:3 };
 
+  let currentTab = 'live';
+  let allTodayMatches = [];
+  let tablesLoaded = false;
+
   async function apiFetch(path) {
     const res = await fetch(SERVER + path);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     return res.json();
   }
 
+  // ── TAB NAVIGACE ──────────────────────────────────────────────
+  function switchTab(tab) {
+    currentTab = tab;
+
+    // desktop tabs
+    document.querySelectorAll('.header-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(`tab-${tab}`).classList.add('active');
+
+    // mobile nav
+    ['live','dnes','tables'].forEach(t => {
+      const el = document.getElementById(`mnav-${t}`);
+      if (el) el.classList.toggle('active', t === tab);
+    });
+
+    const viewMatches = document.getElementById('view-matches');
+    const viewTables  = document.getElementById('view-tables');
+
+    if (tab === 'tables') {
+      viewMatches.style.display = 'none';
+      viewTables.style.display  = '';
+      if (!tablesLoaded) loadFullTables();
+    } else {
+      viewMatches.style.display = '';
+      viewTables.style.display  = 'none';
+      renderMatchesForTab();
+    }
+  }
+
+  // ── ZÁPASY ────────────────────────────────────────────────────
   function statusLabel(m) {
     const s = m.status;
     if (s === 'IN_PLAY')   return { text: m.minute ? `${m.minute}'` : 'LIVE', live: true };
@@ -501,9 +770,9 @@
     return { text: s, live: false };
   }
 
-  function crest(url, name) {
+  function crest(url, name, cls='team-crest') {
     if (!url) return `<div class="team-crest-placeholder">${name?.[0] ?? '?'}</div>`;
-    return `<img class="team-crest" src="${url}" alt="${name}" onerror="this.style.display='none'">`;
+    return `<img class="${cls}" src="${url}" alt="${name}" onerror="this.style.display='none'">`;
   }
 
   function renderMatch(m) {
@@ -512,15 +781,54 @@
     const hg   = m.score?.fullTime?.home ?? m.score?.halfTime?.home ?? '-';
     const ag   = m.score?.fullTime?.away ?? m.score?.halfTime?.away ?? '-';
     const sl   = statusLabel(m);
+    const hid  = m.homeTeam?.id || '';
+    const aid  = m.awayTeam?.id || '';
+    const hcrest = m.homeTeam?.crest || '';
+    const acrest = m.awayTeam?.crest || '';
     return `
       <div class="match-card ${sl.live ? 'live' : ''}">
-        <div class="team home">${crest(m.homeTeam?.crest, home)}<span>${home}</span></div>
+        <div class="team home" onclick="openTeamPanel(${hid},'${escHtml(home)}','${escHtml(hcrest)}')">${crest(m.homeTeam?.crest, home)}<span>${home}</span></div>
         <div class="score-wrap">
           <div class="score ${sl.live ? 'live-score' : ''}">${hg} : ${ag}</div>
           <div class="match-time ${sl.live ? 'live' : ''}">${sl.text}</div>
         </div>
-        <div class="team away">${crest(m.awayTeam?.crest, away)}<span>${away}</span></div>
+        <div class="team away" onclick="openTeamPanel(${aid},'${escHtml(away)}','${escHtml(acrest)}')">${crest(m.awayTeam?.crest, away)}<span>${away}</span></div>
       </div>`;
+  }
+
+  function escHtml(s) { return String(s).replace(/'/g,"&#39;").replace(/"/g,'&quot;'); }
+
+  function renderMatchesForTab() {
+    const col = document.getElementById('matches-col');
+    let matches = allTodayMatches;
+
+    if (currentTab === 'live') {
+      matches = allTodayMatches.filter(m => ['IN_PLAY','PAUSED'].includes(m.status));
+    }
+
+    if (!matches.length) {
+      const msg = currentTab === 'live'
+        ? 'Momentálně nejsou žádné živé zápasy.'
+        : 'Dnes nejsou žádné zápasy.';
+      col.innerHTML = `<div class="no-matches">${msg}</div>`;
+      return;
+    }
+
+    const liveFirst = (a, b) => (['IN_PLAY','PAUSED'].includes(a.status)?0:1) - (['IN_PLAY','PAUSED'].includes(b.status)?0:1);
+    const groups = {};
+    for (const m of matches) {
+      const key = m.competition?.id || 0;
+      if (!groups[key]) groups[key] = { name: COMP_NAMES[key] || m.competition?.name || 'Ostatní', matches: [] };
+      groups[key].matches.push(m);
+    }
+
+    let html = `<div class="last-updated">Aktualizováno: ${new Date().toLocaleTimeString('cs-CZ')}</div>`;
+    for (const key of Object.keys(groups)) {
+      const g = groups[key];
+      g.matches.sort(liveFirst);
+      html += `<div class="competition-tag">${g.name}</div>` + g.matches.map(renderMatch).join('');
+    }
+    col.innerHTML = html;
   }
 
   async function loadMatches() {
@@ -528,26 +836,9 @@
     try {
       const today = new Date().toISOString().split('T')[0];
       const data = await apiFetch(`/matches?date=${today}`);
-      const matches = data.matches || [];
-      if (!matches.length) { col.innerHTML = `<div class="no-matches">Dnes nejsou žádné zápasy.</div>`; return; }
-
-      const groups = {};
-      for (const m of matches) {
-        const key = m.competition?.id || 0;
-        if (!groups[key]) groups[key] = { name: COMP_NAMES[key] || m.competition?.name || 'Ostatní', matches: [] };
-        groups[key].matches.push(m);
-      }
-
-      const liveFirst = (a, b) => (['IN_PLAY','PAUSED'].includes(a.status)?0:1) - (['IN_PLAY','PAUSED'].includes(b.status)?0:1);
-
-      let html = `<div class="last-updated">Aktualizováno: ${new Date().toLocaleTimeString('cs-CZ')}</div>`;
-      for (const key of Object.keys(groups)) {
-        const g = groups[key];
-        g.matches.sort(liveFirst);
-        html += `<div class="competition-tag">${g.name}</div>` + g.matches.map(renderMatch).join('');
-      }
-      col.innerHTML = html;
-      updateTicker(matches);
+      allTodayMatches = data.matches || [];
+      renderMatchesForTab();
+      updateTicker(allTodayMatches);
     } catch (e) {
       col.innerHTML = `<div class="error-msg">Nepodařilo se načíst data.<br><small>Spusť: <strong>node server.js</strong></small><br><small style="opacity:.6">${e.message}</small></div>`;
     }
@@ -565,6 +856,7 @@
     document.getElementById('ticker-inner').innerHTML = [...parts,...parts].map(p=>`<span>${p}</span>`).join('');
   }
 
+  // ── SIDEBAR STANDINGS ─────────────────────────────────────────
   async function loadStandings(compId, bodyId) {
     const el = document.getElementById(bodyId);
     try {
@@ -586,7 +878,6 @@
     }
   }
 
-  // Toggle sbalit/rozbalit
   function toggleWidget(id) {
     const body    = document.getElementById(`body-${id}`);
     const chevron = document.getElementById(`chevron-${id}`);
@@ -594,7 +885,62 @@
     chevron.classList.toggle('open');
   }
 
-  // Otevřít modal s celou tabulkou
+  // ── TABULKY VIEW (full) ───────────────────────────────────────
+  const FULL_COMPS = [
+    { id: 2021, name: 'Premier League', key: 'pl-full' },
+    { id: 2002, name: 'Bundesliga',     key: 'bl-full' },
+    { id: 2014, name: 'La Liga',        key: 'll-full' },
+    { id: 2019, name: 'Serie A',        key: 'sa-full' },
+    { id: 2015, name: 'Ligue 1',        key: 'l1-full' },
+  ];
+
+  async function loadFullTables() {
+    tablesLoaded = true;
+    const grid = document.getElementById('tables-grid');
+    grid.innerHTML = FULL_COMPS.map(c => `
+      <div class="widget widget-full" id="wfull-${c.key}">
+        <div class="widget-header" style="cursor:default">
+          <div class="widget-header-left">
+            <span>${c.name}</span>
+            <span style="font-size:10px;font-weight:400;opacity:0.6">2024/25</span>
+          </div>
+        </div>
+        <div id="body-${c.key}"><div class="loading"><div class="spinner"></div>Načítám...</div></div>
+      </div>`).join('');
+
+    for (const c of FULL_COMPS) {
+      loadFullStandings(c.id, `body-${c.key}`);
+    }
+  }
+
+  async function loadFullStandings(compId, bodyId) {
+    const el = document.getElementById(bodyId);
+    try {
+      const data = await apiFetch(`/standings?id=${compId}`);
+      const standing = data.standings?.find(s => s.type === 'TOTAL');
+      if (!standing) { el.innerHTML = '<div class="no-matches">Není k dispozici</div>'; return; }
+
+      const table = standing.table;
+      const total = table.length;
+      const euro  = EURO_SPOTS[compId] || 4;
+      const rel   = RELEGATION[compId] || 3;
+
+      let html = `<div class="standings-row header"><span>#</span><span>Tým</span><span>Z</span><span>V</span><span>R</span><span>P</span><span>B</span></div>`;
+      html += table.map((row, i) => {
+        const isEuro = i < euro;
+        const isRel  = i >= total - rel;
+        const cls    = isEuro ? 'top4' : isRel ? 'relegation' : '';
+        const name   = row.team?.shortName || row.team?.name || '?';
+        return `<div class="standings-row ${cls}"><span class="pos">${row.position}</span><span style="font-weight:500">${name}</span><span style="color:var(--muted)">${row.playedGames}</span><span style="color:var(--muted)">${row.won}</span><span style="color:var(--muted)">${row.draw}</span><span style="color:var(--muted)">${row.lost}</span><span class="pts">${row.points}</span></div>`;
+      }).join('');
+
+      el.innerHTML = html + `<div class="zone-legend"><span><span class="zdot" style="background:#4ade80"></span>Pohárová Evropa</span><span><span class="zdot" style="background:var(--red)"></span>Sestup</span></div>`;
+    } catch (e) {
+      el.innerHTML = `<div style="padding:.75rem 1rem;font-size:12px;color:#f87171">Chyba: server neběží</div>`;
+    }
+  }
+
+  // ── MODAL – celá tabulka ──────────────────────────────────────
   async function openModal(compId, name) {
     document.getElementById('modal-title').textContent = `${name} – Celá tabulka`;
     document.getElementById('modal-content').innerHTML = '<div class="loading"><div class="spinner"></div>Načítám...</div>';
@@ -644,22 +990,126 @@
     if (e.target === document.getElementById('modal-overlay')) closeModal();
   }
 
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  // ── TEAM DETAIL PANEL ─────────────────────────────────────────
+  async function openTeamPanel(teamId, teamName, teamCrestUrl) {
+    if (!teamId) return;
 
-  // Aktivní stav spodní lišty podle scroll pozice
-  const mnavResults  = document.getElementById('mnav-results');
-  const mnavTables   = document.getElementById('mnav-tables');
-  if (mnavResults && mnavTables) {
-    window.addEventListener('scroll', () => {
-      const sidebar = document.getElementById('sidebar');
-      if (!sidebar) return;
-      const atTables = window.scrollY >= sidebar.offsetTop - 80;
-      mnavResults.classList.toggle('active', !atTables);
-      mnavTables.classList.toggle('active', atTables);
-    }, { passive: true });
+    const overlay = document.getElementById('team-panel-overlay');
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+
+    const identity = document.getElementById('panel-identity');
+    const body     = document.getElementById('panel-body');
+
+    const crestImg = teamCrestUrl
+      ? `<img class="team-panel-crest" src="${teamCrestUrl}" alt="${teamName}" onerror="this.style.display='none'">`
+      : `<div class="team-crest-placeholder" style="width:44px;height:44px;font-size:16px">${teamName[0]}</div>`;
+
+    identity.innerHTML = `${crestImg}<span class="team-panel-name">${teamName}</span>`;
+    body.innerHTML = '<div class="loading"><div class="spinner"></div>Načítám...</div>';
+
+    try {
+      const [finishedData, scheduledData] = await Promise.all([
+        apiFetch(`/team-matches?id=${teamId}&status=FINISHED&limit=5`),
+        apiFetch(`/team-matches?id=${teamId}&status=SCHEDULED&limit=5`),
+      ]);
+
+      const finished  = (finishedData.matches || []).slice(-5);
+      const scheduled = (scheduledData.matches || []).slice(0, 5);
+
+      body.innerHTML = renderTeamPanelBody(teamId, teamName, finished, scheduled);
+    } catch (e) {
+      body.innerHTML = `<div class="error-msg" style="margin:1rem">Chyba: ${e.message}</div>`;
+    }
   }
 
-  // Spustit
+  function matchResult(m, teamId) {
+    const hg = m.score?.fullTime?.home;
+    const ag = m.score?.fullTime?.away;
+    if (hg == null || ag == null) return 'D';
+    const isHome = m.homeTeam?.id === teamId;
+    const scored   = isHome ? hg : ag;
+    const conceded = isHome ? ag : hg;
+    if (scored > conceded)  return 'W';
+    if (scored < conceded)  return 'L';
+    return 'D';
+  }
+
+  function renderTeamPanelBody(teamId, teamName, finished, scheduled) {
+    let html = '';
+
+    // Forma
+    if (finished.length) {
+      const form = finished.map(m => matchResult(m, teamId));
+      html += `<div class="team-panel-section">Forma (posledních ${form.length} zápasů)</div>
+        <div class="form-row">
+          ${form.map(r => `<div class="form-badge ${r}" title="${r==='W'?'Výhra':r==='D'?'Remíza':'Prohra'}">${r}</div>`).join('')}
+        </div>`;
+
+      html += `<div class="team-panel-section">Poslední zápasy</div>`;
+      html += [...finished].reverse().map(m => renderPanelMatch(m, teamId)).join('');
+    }
+
+    // Nadcházející
+    if (scheduled.length) {
+      html += `<div class="team-panel-section">Nejbližší zápasy</div>`;
+      html += scheduled.map(m => renderPanelMatch(m, teamId)).join('');
+    }
+
+    if (!finished.length && !scheduled.length) {
+      html += `<div class="no-matches">Žádné zápasy k dispozici.</div>`;
+    }
+
+    return html;
+  }
+
+  function renderPanelMatch(m, teamId) {
+    const home = m.homeTeam?.shortName || m.homeTeam?.name || '?';
+    const away = m.awayTeam?.shortName || m.awayTeam?.name || '?';
+    const hg   = m.score?.fullTime?.home;
+    const ag   = m.score?.fullTime?.away;
+    const isHome = m.homeTeam?.id === teamId;
+
+    let scorePart = '';
+    let scoreClass = 'upcoming';
+    if (hg != null && ag != null) {
+      const r = matchResult(m, teamId);
+      scoreClass = r === 'W' ? 'win' : r === 'L' ? 'loss' : 'draw';
+      scorePart = `${hg} : ${ag}`;
+    } else {
+      const d = new Date(m.utcDate);
+      scorePart = d.toLocaleDateString('cs-CZ', { day:'2-digit', month:'2-digit' }) + ' ' +
+                  d.toLocaleTimeString('cs-CZ', { hour:'2-digit', minute:'2-digit' });
+    }
+
+    const date = new Date(m.utcDate).toLocaleDateString('cs-CZ', { day:'2-digit', month:'2-digit', year:'2-digit' });
+    const hCrest = m.homeTeam?.crest ? `<img class="panel-crest" src="${m.homeTeam.crest}" alt="${home}" onerror="this.style.display='none'">` : '';
+    const aCrest = m.awayTeam?.crest ? `<img class="panel-crest" src="${m.awayTeam.crest}" alt="${away}" onerror="this.style.display='none'">` : '';
+
+    return `
+      <div class="panel-match">
+        <div class="panel-team ${isHome ? 'highlighted' : ''}">${hCrest}<span>${home}</span></div>
+        <div class="panel-score-wrap">
+          <div class="panel-score ${scoreClass}">${scorePart}</div>
+          ${hg != null ? `<div class="panel-date">${date}</div>` : ''}
+        </div>
+        <div class="panel-team away ${!isHome ? 'highlighted' : ''}">${aCrest}<span>${away}</span></div>
+      </div>`;
+  }
+
+  function closeTeamPanel() {
+    document.getElementById('team-panel-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      closeTeamPanel();
+      closeModal();
+    }
+  });
+
+  // ── INIT ─────────────────────────────────────────────────────
   loadMatches();
   loadStandings(2021, 'body-pl');
   loadStandings(2002, 'body-bl');

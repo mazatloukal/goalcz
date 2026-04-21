@@ -18,6 +18,14 @@ Projekt funguje lokálně.
 Server musí být spuštěn přes `node server.js` před otevřením index.html.
 Frontend načítá data z localhost:3000.
 
+- Redesign navigace: taby Live / Dnes / Tabulky v headeru
+- Live tab: filtruje pouze IN_PLAY a PAUSED zápasy
+- Tabulky tab: full-width grid se všemi 5 ligami (celá tabulka bez modalu)
+- Detail týmu: klik na tým v zápasové kartě otevře slide-in panel zprava
+  - Forma: W/D/L kolečka za posledních 5 zápasů
+  - Poslední zápasy s barevným skóre (zelená=výhra, červená=prohra)
+  - Nejbližší naplánované zápasy
+
 ## Technické poznámky
 - CORS problém řeší server.js jako proxy — přímé volání API z prohlížeče nefunguje
 - API klíč: uložen v server.js (football-data.org free tier)
