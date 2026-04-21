@@ -214,7 +214,7 @@
 
     .standings-row {
       display: grid;
-      grid-template-columns: 22px 1fr 26px 26px 26px 32px;
+      grid-template-columns: 22px 1fr 24px 22px 22px 42px 30px;
       padding: 7px 1rem;
       font-size: 12px;
       border-bottom: 1px solid var(--border);
@@ -234,7 +234,7 @@
 
     /* Rozšířené standings v Tabulky view */
     .widget-full .standings-row {
-      grid-template-columns: 26px 1fr 30px 30px 30px 30px 36px;
+      grid-template-columns: 26px 1fr 28px 26px 26px 26px 30px 30px 36px;
       font-size: 13px;
       padding: 9px 1.25rem;
     }
@@ -307,7 +307,7 @@
 
     .modal-row {
       display: grid;
-      grid-template-columns: 26px 1fr 30px 30px 30px 30px 36px;
+      grid-template-columns: 26px 1fr 28px 26px 26px 26px 32px 32px 38px;
       padding: 9px 1.25rem;
       font-size: 13px;
       border-bottom: 1px solid var(--border);
@@ -866,11 +866,12 @@
 
       const top  = standing.table.slice(0, 5);
       const euro = EURO_SPOTS[compId] || 4;
-      let html = `<div class="standings-row header"><span>#</span><span>Tým</span><span>Z</span><span>V</span><span>P</span><span>B</span></div>`;
+      let html = `<div class="standings-row header"><span>#</span><span>Tým</span><span>Z</span><span>V</span><span>P</span><span style="color:var(--muted)">Skóre</span><span>B</span></div>`;
       html += top.map((row, i) => {
         const cls  = i < euro ? 'top4' : '';
         const name = row.team?.shortName || row.team?.name || '?';
-        return `<div class="standings-row ${cls}"><span class="pos">${row.position}</span><span>${name}</span><span style="color:var(--muted)">${row.playedGames}</span><span style="color:var(--muted)">${row.won}</span><span style="color:var(--muted)">${row.lost}</span><span class="pts">${row.points}</span></div>`;
+        const skore = `${row.goalsFor ?? '-'}:${row.goalsAgainst ?? '-'}`;
+        return `<div class="standings-row ${cls}"><span class="pos">${row.position}</span><span>${name}</span><span style="color:var(--muted)">${row.playedGames}</span><span style="color:var(--muted)">${row.won}</span><span style="color:var(--muted)">${row.lost}</span><span style="color:var(--muted);font-size:11px">${skore}</span><span class="pts">${row.points}</span></div>`;
       }).join('');
       el.innerHTML = html;
     } catch (e) {
@@ -887,11 +888,14 @@
 
   // ── TABULKY VIEW (full) ───────────────────────────────────────
   const FULL_COMPS = [
-    { id: 2021, name: 'Premier League', key: 'pl-full' },
-    { id: 2002, name: 'Bundesliga',     key: 'bl-full' },
-    { id: 2014, name: 'La Liga',        key: 'll-full' },
-    { id: 2019, name: 'Serie A',        key: 'sa-full' },
-    { id: 2015, name: 'Ligue 1',        key: 'l1-full' },
+    { id: 2021, name: 'Premier League',    key: 'pl-full' },
+    { id: 2002, name: 'Bundesliga',        key: 'bl-full' },
+    { id: 2014, name: 'La Liga',           key: 'll-full' },
+    { id: 2019, name: 'Serie A',           key: 'sa-full' },
+    { id: 2015, name: 'Ligue 1',           key: 'l1-full' },
+    { id: 2001, name: 'Liga mistrů',       key: 'ucl-full', cup: true },
+    { id: 2018, name: 'Liga Evropy',       key: 'uel-full', cup: true },
+    { id: 2017, name: 'Liga konferencí',   key: 'uecl-full', cup: true },
   ];
 
   async function loadFullTables() {
@@ -909,11 +913,11 @@
       </div>`).join('');
 
     for (const c of FULL_COMPS) {
-      loadFullStandings(c.id, `body-${c.key}`);
+      loadFullStandings(c.id, `body-${c.key}`, c.cup || false);
     }
   }
 
-  async function loadFullStandings(compId, bodyId) {
+  async function loadFullStandings(compId, bodyId, isCup) {
     const el = document.getElementById(bodyId);
     try {
       const data = await apiFetch(`/standings?id=${compId}`);
@@ -922,19 +926,20 @@
 
       const table = standing.table;
       const total = table.length;
-      const euro  = EURO_SPOTS[compId] || 4;
-      const rel   = RELEGATION[compId] || 3;
+      const euro  = isCup ? 0 : (EURO_SPOTS[compId] || 4);
+      const rel   = isCup ? 0 : (RELEGATION[compId] || 3);
 
-      let html = `<div class="standings-row header"><span>#</span><span>Tým</span><span>Z</span><span>V</span><span>R</span><span>P</span><span>B</span></div>`;
+      let html = `<div class="standings-row header"><span>#</span><span>Tým</span><span>Z</span><span>V</span><span>R</span><span>P</span><span>GF</span><span>GA</span><span>B</span></div>`;
       html += table.map((row, i) => {
-        const isEuro = i < euro;
-        const isRel  = i >= total - rel;
+        const isEuro = !isCup && i < euro;
+        const isRel  = !isCup && i >= total - rel;
         const cls    = isEuro ? 'top4' : isRel ? 'relegation' : '';
         const name   = row.team?.shortName || row.team?.name || '?';
-        return `<div class="standings-row ${cls}"><span class="pos">${row.position}</span><span style="font-weight:500">${name}</span><span style="color:var(--muted)">${row.playedGames}</span><span style="color:var(--muted)">${row.won}</span><span style="color:var(--muted)">${row.draw}</span><span style="color:var(--muted)">${row.lost}</span><span class="pts">${row.points}</span></div>`;
+        return `<div class="standings-row ${cls}"><span class="pos">${row.position}</span><span style="font-weight:500">${name}</span><span style="color:var(--muted)">${row.playedGames}</span><span style="color:var(--muted)">${row.won}</span><span style="color:var(--muted)">${row.draw}</span><span style="color:var(--muted)">${row.lost}</span><span style="color:var(--muted)">${row.goalsFor ?? '-'}</span><span style="color:var(--muted)">${row.goalsAgainst ?? '-'}</span><span class="pts">${row.points}</span></div>`;
       }).join('');
 
-      el.innerHTML = html + `<div class="zone-legend"><span><span class="zdot" style="background:#4ade80"></span>Pohárová Evropa</span><span><span class="zdot" style="background:var(--red)"></span>Sestup</span></div>`;
+      const legend = isCup ? '' : `<div class="zone-legend"><span><span class="zdot" style="background:#4ade80"></span>Postup</span><span><span class="zdot" style="background:var(--red)"></span>Sestup</span></div>`;
+      el.innerHTML = html + legend;
     } catch (e) {
       el.innerHTML = `<div style="padding:.75rem 1rem;font-size:12px;color:#f87171">Chyba: server neběží</div>`;
     }
@@ -957,7 +962,7 @@
       const euro  = EURO_SPOTS[compId] || 4;
       const rel   = RELEGATION[compId] || 3;
 
-      let html = `<div class="modal-row header"><span>#</span><span>Tým</span><span>Z</span><span>V</span><span>R</span><span>P</span><span>B</span></div>`;
+      let html = `<div class="modal-row header"><span>#</span><span>Tým</span><span>Z</span><span>V</span><span>R</span><span>P</span><span>GF</span><span>GA</span><span>B</span></div>`;
       html += table.map((row, i) => {
         const isEuro = i < euro;
         const isRel  = i >= total - rel;
@@ -971,6 +976,8 @@
             <span style="color:var(--muted)">${row.won}</span>
             <span style="color:var(--muted)">${row.draw}</span>
             <span style="color:var(--muted)">${row.lost}</span>
+            <span style="color:var(--muted)">${row.goalsFor ?? '-'}</span>
+            <span style="color:var(--muted)">${row.goalsAgainst ?? '-'}</span>
             <span class="pts">${row.points}</span>
           </div>`;
       }).join('');
@@ -1009,13 +1016,16 @@
     body.innerHTML = '<div class="loading"><div class="spinner"></div>Načítám...</div>';
 
     try {
-      const [finishedData, scheduledData] = await Promise.all([
+      const today = new Date().toISOString().split('T')[0];
+      const [finishedData, upcomingData] = await Promise.all([
         apiFetch(`/team-matches?id=${teamId}&status=FINISHED&limit=5`),
-        apiFetch(`/team-matches?id=${teamId}&status=SCHEDULED&limit=5`),
+        apiFetch(`/team-matches?id=${teamId}&dateFrom=${today}&limit=5`),
       ]);
 
       const finished  = (finishedData.matches || []).slice(-5);
-      const scheduled = (scheduledData.matches || []).slice(0, 5);
+      const scheduled = (upcomingData.matches || [])
+        .filter(m => ['SCHEDULED','TIMED'].includes(m.status))
+        .slice(0, 5);
 
       body.innerHTML = renderTeamPanelBody(teamId, teamName, finished, scheduled);
     } catch (e) {

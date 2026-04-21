@@ -93,15 +93,23 @@ const server = http.createServer(async (req, res) => {
       res.end(JSON.stringify(data));
 
     } else if (pathname === '/team-matches') {
-      const id = url.searchParams.get('id');
-      const status = url.searchParams.get('status') || 'FINISHED';
-      const limit = url.searchParams.get('limit') || '5';
+      const id       = url.searchParams.get('id');
+      const status   = url.searchParams.get('status');
+      const limit    = url.searchParams.get('limit') || '5';
+      const dateFrom = url.searchParams.get('dateFrom');
+      const dateTo   = url.searchParams.get('dateTo');
       if (!id) { res.statusCode = 400; res.end(JSON.stringify({ error: 'Missing id' })); return; }
-      const cacheKey = `team_matches_${id}_${status}_${limit}`;
+
+      let apiPath = `/teams/${id}/matches?limit=${limit}`;
+      if (status)   apiPath += `&status=${status}`;
+      if (dateFrom) apiPath += `&dateFrom=${dateFrom}`;
+      if (dateTo)   apiPath += `&dateTo=${dateTo}`;
+
+      const cacheKey = `team_matches_${id}_${status||''}_${limit}_${dateFrom||''}_${dateTo||''}`;
       let data = getCache(cacheKey);
       if (!data) {
-        data = await apiRequest(`/teams/${id}/matches?status=${status}&limit=${limit}`);
-        const ttl = status === 'FINISHED' ? 2 * 60 * 1000 : 10 * 60 * 1000;
+        data = await apiRequest(apiPath);
+        const ttl = status === 'FINISHED' ? 2 * 60 * 1000 : 5 * 60 * 1000;
         setCache(cacheKey, data, ttl);
       }
       res.end(JSON.stringify(data));
