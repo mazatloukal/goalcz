@@ -29,6 +29,12 @@
   - Pavouk: zápasy vyřazovací fáze seřazené podle kola
   - Klik na tým v tabulce → otevře panel s posledními 5 zápasy (V/R/P)
   - server.js: nový endpoint /competition-matches pro zápasy soutěže
+- **Vizuální bracket UCL/UEL/UECL (2026-04-22):**
+  - Pavouk přepracován na horizontální bracket s CSS linkami
+  - Sloupce zleva doprava: KO Play-off → Osmifinále → Čtvrtfinále → Semifinále → Finále
+  - Každý zápas jako karta: logo | název týmu, skóre uprostřed, winner tučně bíle
+  - CSS border-based konektory (vertikální čára + horizontální rameno) mezi koly
+  - Horizontální scroll na mobilech (overflow-x: auto)
 
 ## Aktuální stav
 Projekt běží na Railway.app (online).
