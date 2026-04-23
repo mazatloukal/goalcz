@@ -30,6 +30,13 @@
   - Klik na tým v tabulce → otevře panel s posledními 5 zápasy (V/R/P)
   - server.js: nový endpoint /competition-matches pro zápasy soutěže
 - **Vizuální bracket UCL/UEL/UECL (2026-04-22):**
+- **Home tab redesign (2026-04-23):**
+  - Tab "Live" přejmenován na "Home" (zachováno ID pro JS)
+  - Home sekce: 🔴 ŽIVĚ (max 5), Dnes doporučujeme (top 5 dle priority), ⭐ Moje týmy, 📌 Moje ligy, Všechny soutěže
+  - Oblíbené týmy/ligy uloženy v localStorage (goalcz_fav_teams, goalcz_fav_leagues, max 5)
+  - Hvězdička v team panelu a v accordion kartě ligy (Tabulky view)
+  - Vyhledávání: lupa v headeru + mobil spodní nav → fullscreen overlay, hledá soutěže i týmy (z cache standings)
+  - compEmblems cache: logotypy soutěží dostupné pro Home sekce po načtení tabulek
   - Pavouk přepracován na horizontální bracket s CSS linkami
   - Sloupce zleva doprava: KO Play-off → Osmifinále → Čtvrtfinále → Semifinále → Finále
   - Každý zápas jako karta: logo | název týmu, skóre uprostřed, winner tučně bíle

@@ -740,6 +740,118 @@
     .panel-score.upcoming { color: var(--muted); font-size: 13px; letter-spacing: 0.5px; }
     .panel-date { font-size: 10px; color: var(--muted); margin-top: 2px; }
 
+    /* ── HOME SEKCE ── */
+    .home-section-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+      color: var(--text); padding: 0.4rem 0 0.4rem 10px;
+      border-left: 3px solid var(--red); margin: 1.25rem 0 0.75rem;
+    }
+    .home-section-title:first-child { margin-top: 0; }
+
+    /* ── OBLÍBENÉ – karty ── */
+    .fav-list { display: flex; flex-direction: column; gap: 4px; margin-bottom: 0.5rem; }
+    .fav-item {
+      display: flex; align-items: center; gap: 10px; padding: 8px 12px;
+      border-radius: 8px; cursor: pointer; transition: background 0.15s;
+      background: var(--dark2); border: 1px solid var(--border);
+    }
+    .fav-item:hover { background: var(--dark3); border-color: rgba(255,255,255,0.12); }
+    .fav-logo { width: 32px; height: 32px; object-fit: contain; flex-shrink: 0; }
+    .fav-logo-placeholder {
+      width: 32px; height: 32px; border-radius: 50%; background: var(--dark3);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700;
+      color: var(--muted); flex-shrink: 0;
+    }
+    .fav-name { flex: 1; font-size: 14px; font-weight: 500; }
+    .fav-remove {
+      background: none; border: none; color: var(--muted); font-size: 20px;
+      cursor: pointer; padding: 0 4px; line-height: 1; transition: color 0.15s; flex-shrink: 0;
+    }
+    .fav-remove:hover { color: var(--red); }
+    .fav-star {
+      background: none; border: none; color: var(--muted); font-size: 20px;
+      cursor: pointer; padding: 0 4px; line-height: 1; transition: color 0.15s; flex-shrink: 0;
+    }
+    .fav-star:hover { color: #eab308; }
+    .fav-star.fav-star-active { color: #eab308; }
+    .fav-star:disabled { opacity: 0.3; cursor: default; }
+
+    /* Hvězdička v comp-card headeru */
+    .comp-star-btn {
+      background: none; border: none; font-size: 18px; color: var(--muted);
+      cursor: pointer; padding: 4px 6px; border-radius: 4px;
+      transition: color 0.15s, background 0.15s; line-height: 1; flex-shrink: 0;
+    }
+    .comp-star-btn:hover { color: #eab308; background: rgba(234,179,8,0.1); }
+    .comp-star-btn.active { color: #eab308; }
+
+    /* Hvězdička v team panelu */
+    .panel-fav-btn {
+      background: none; border: 1px solid var(--border); color: var(--muted);
+      width: 34px; height: 34px; border-radius: 6px; cursor: pointer; font-size: 18px;
+      display: flex; align-items: center; justify-content: center; transition: all 0.15s; flex-shrink: 0;
+    }
+    .panel-fav-btn:hover { border-color: rgba(234,179,8,0.4); color: #eab308; }
+    .panel-fav-btn.active { border-color: rgba(234,179,8,0.5); color: #eab308; }
+
+    /* Lupa v headeru */
+    .header-search-btn {
+      background: none; border: 1px solid var(--border); color: var(--muted);
+      width: 34px; height: 34px; border-radius: 6px; cursor: pointer; font-size: 16px;
+      display: flex; align-items: center; justify-content: center; transition: all 0.15s; flex-shrink: 0;
+    }
+    .header-search-btn:hover { border-color: rgba(255,255,255,0.2); color: #fff; }
+
+    /* ── SEARCH OVERLAY ── */
+    .search-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.95); z-index: 9999;
+      flex-direction: column; align-items: center; padding-top: 6vh;
+    }
+    .search-overlay.open { display: flex; }
+    .search-box { width: 100%; max-width: 600px; padding: 0 1rem; }
+    .search-header { display: flex; gap: 10px; align-items: center; margin-bottom: 1rem; }
+    .search-input {
+      flex: 1; background: var(--dark2); border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 10px; padding: 12px 18px;
+      font-family: 'Barlow', sans-serif; font-size: 18px; color: #fff; outline: none;
+      transition: border-color 0.15s;
+    }
+    .search-input:focus { border-color: rgba(255,255,255,0.35); }
+    .search-input::placeholder { color: var(--muted); }
+    .search-close {
+      background: var(--dark2); border: 1px solid var(--border); color: var(--muted);
+      width: 44px; height: 44px; border-radius: 10px; cursor: pointer; font-size: 18px;
+      display: flex; align-items: center; justify-content: center; transition: all 0.15s; flex-shrink: 0;
+    }
+    .search-close:hover { border-color: rgba(255,255,255,0.25); color: #fff; }
+    .search-results {
+      background: var(--dark2); border: 1px solid var(--border);
+      border-radius: 10px; overflow: hidden; max-height: 70vh; overflow-y: auto;
+    }
+    .search-results:empty { display: none; }
+    .search-result {
+      display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+      border-bottom: 1px solid var(--border); cursor: pointer; transition: background 0.1s;
+    }
+    .search-result:last-child { border-bottom: none; }
+    .search-result:hover { background: rgba(255,255,255,0.05); }
+    .search-result-logo { width: 28px; height: 28px; object-fit: contain; flex-shrink: 0; }
+    .search-result-placeholder {
+      width: 28px; height: 28px; border-radius: 50%; background: var(--dark3);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700;
+      color: var(--muted); flex-shrink: 0;
+    }
+    .search-result-name { flex: 1; font-size: 15px; font-weight: 500; }
+    .search-result-type {
+      font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px;
+      color: var(--muted); background: var(--dark3); padding: 2px 7px; border-radius: 4px;
+    }
+    .search-no-results { padding: 2rem; text-align: center; color: var(--muted); font-size: 14px; }
+
     footer { text-align: center; padding: 1.5rem; font-size: 11px; color: var(--muted); border-top: 1px solid var(--border); margin-top: 1rem; }
 
     /* Mobilní navigační lišta */
@@ -820,13 +932,11 @@
 <header>
   <a class="logo" href="#"><div class="logo-icon">⚽</div>GoalCZ</a>
   <div class="header-tabs">
-    <button class="header-tab tab-live active" id="tab-live" onclick="switchTab('live')">
-      <span class="tab-dot"></span>Live
-    </button>
+    <button class="header-tab tab-live active" id="tab-live" onclick="switchTab('live')">Home</button>
     <button class="header-tab" id="tab-dnes" onclick="switchTab('dnes')">Dnes</button>
     <button class="header-tab" id="tab-tables" onclick="switchTab('tables')">Tabulky</button>
   </div>
-  <div class="live-badge"><span class="dot"></span> Live</div>
+  <button class="header-search-btn" onclick="openSearch()" title="Hledat">🔍</button>
 </header>
 
 <div class="ticker">
@@ -957,11 +1067,25 @@
       <div class="team-panel-identity" id="panel-identity">
         <div class="loading" style="padding:0"><div class="spinner" style="margin:0"></div></div>
       </div>
-      <button class="modal-close" onclick="closeTeamPanel()">✕</button>
+      <div style="display:flex;align-items:center;gap:8px">
+        <button class="panel-fav-btn" id="panel-fav-btn" onclick="togglePanelFav()" title="Přidat do oblíbených">☆</button>
+        <button class="modal-close" onclick="closeTeamPanel()">✕</button>
+      </div>
     </div>
     <div id="panel-body">
       <div class="loading"><div class="spinner"></div>Načítám...</div>
     </div>
+  </div>
+</div>
+
+<!-- SEARCH OVERLAY -->
+<div class="search-overlay" id="search-overlay">
+  <div class="search-box">
+    <div class="search-header">
+      <input class="search-input" id="search-input" type="text" placeholder="Hledat tým nebo ligu..." autocomplete="off" oninput="debouncedSearch()">
+      <button class="search-close" onclick="closeSearch()">✕</button>
+    </div>
+    <div class="search-results" id="search-results"></div>
   </div>
 </div>
 
@@ -971,8 +1095,8 @@
 
 <nav class="mobile-nav">
   <a href="#" class="active" id="mnav-live" onclick="switchTab('live');return false">
-    <span class="mobile-nav-icon">🔴</span>
-    <span>Live</span>
+    <span class="mobile-nav-icon">🏠</span>
+    <span>Home</span>
   </a>
   <a href="#" id="mnav-dnes" onclick="switchTab('dnes');return false">
     <span class="mobile-nav-icon">📺</span>
@@ -982,6 +1106,10 @@
     <span class="mobile-nav-icon">📊</span>
     <span>Tabulky</span>
   </a>
+  <a href="#" onclick="openSearch();return false">
+    <span class="mobile-nav-icon">🔍</span>
+    <span>Hledat</span>
+  </a>
 </nav>
 
 <script>
@@ -989,10 +1117,14 @@
   const COMP_NAMES = { 2021:'Premier League', 2002:'Bundesliga', 2014:'La Liga', 2019:'Serie A', 2015:'Ligue 1', 2001:'Liga mistrů', 2017:'Liga konferencí', 2018:'Liga Evropy' };
   const EURO_SPOTS  = { 2021:4, 2002:4, 2014:4, 2019:4, 2015:3 };
   const RELEGATION  = { 2021:3, 2002:3, 2014:3, 2019:3, 2015:3 };
+  const PRIO_COMPS  = [2001,2018,2017,2021,2014,2002,2019,2015];
 
   let currentTab = 'live';
   let allTodayMatches = [];
   let tablesLoaded = false;
+  const compEmblems = {};
+  const searchTeamsCache = {};
+  let panelTeamId, panelTeamName, panelTeamCrest;
 
   async function apiFetch(path) {
     const res = await fetch(SERVER + path);
@@ -1000,15 +1132,26 @@
     return res.json();
   }
 
+  // ── OBLÍBENÉ – localStorage ───────────────────────────────────
+  function getFavTeams() { try { return JSON.parse(localStorage.getItem('goalcz_fav_teams')) || []; } catch { return []; } }
+  function setFavTeams(v) { localStorage.setItem('goalcz_fav_teams', JSON.stringify(v.slice(0,5))); }
+  function isFavTeam(id) { return getFavTeams().some(t => t.id === id); }
+  function addFavTeam(id, name, crest) { const t = getFavTeams(); if (t.find(x=>x.id===id)||t.length>=5) return; setFavTeams([...t,{id,name,crest}]); }
+  function removeFavTeam(id) { setFavTeams(getFavTeams().filter(t => t.id !== id)); }
+
+  function getFavLeagues() { try { return JSON.parse(localStorage.getItem('goalcz_fav_leagues')) || []; } catch { return []; } }
+  function setFavLeagues(v) { localStorage.setItem('goalcz_fav_leagues', JSON.stringify(v.slice(0,5))); }
+  function isFavLeague(id) { return getFavLeagues().some(l => l.id === id); }
+  function addFavLeague(id, name, emblem) { const l = getFavLeagues(); if (l.find(x=>x.id===id)||l.length>=5) return; setFavLeagues([...l,{id,name,emblem:emblem||compEmblems[id]||''}]); }
+  function removeFavLeague(id) { setFavLeagues(getFavLeagues().filter(l => l.id !== id)); }
+
   // ── TAB NAVIGACE ──────────────────────────────────────────────
   function switchTab(tab) {
     currentTab = tab;
 
-    // desktop tabs
     document.querySelectorAll('.header-tab').forEach(t => t.classList.remove('active'));
     document.getElementById(`tab-${tab}`).classList.add('active');
 
-    // mobile nav
     ['live','dnes','tables'].forEach(t => {
       const el = document.getElementById(`mnav-${t}`);
       if (el) el.classList.toggle('active', t === tab);
@@ -1024,7 +1167,8 @@
     } else {
       viewMatches.style.display = '';
       viewTables.style.display  = 'none';
-      renderMatchesForTab();
+      if (tab === 'live') renderHomeTab();
+      else renderMatchesForTab();
     }
   }
 
@@ -1070,23 +1214,127 @@
 
   function escHtml(s) { return String(s).replace(/'/g,"&#39;").replace(/"/g,'&quot;'); }
 
-  function renderMatchesForTab() {
+  // ── HOME TAB ──────────────────────────────────────────────────
+  function renderHomeTab() {
     const col = document.getElementById('matches-col');
-    let matches = allTodayMatches;
+    let html = `<div class="last-updated">Aktualizováno: ${new Date().toLocaleTimeString('cs-CZ')}</div>`;
 
-    if (currentTab === 'live') {
-      matches = allTodayMatches.filter(m => ['IN_PLAY','PAUSED'].includes(m.status));
+    // A) Live zápasy (max 5)
+    const liveMatches = allTodayMatches.filter(m => ['IN_PLAY','PAUSED'].includes(m.status)).slice(0,5);
+    if (liveMatches.length) {
+      html += `<div class="home-section-title">🔴 ŽIVĚ</div>`;
+      html += liveMatches.map(renderMatch).join('');
     }
 
+    // B) Dnes doporučujeme (max 5 dle priority soutěže, ne FINISHED/CANCELLED/live)
+    const liveIds = new Set(liveMatches.map(m => m.id));
+    const candidates = allTodayMatches.filter(m => !['FINISHED','CANCELLED'].includes(m.status) && !liveIds.has(m.id));
+    const recommended = [];
+    for (const cid of PRIO_COMPS) {
+      if (recommended.length >= 5) break;
+      for (const m of candidates.filter(x => x.competition?.id === cid)) {
+        if (recommended.length >= 5) break;
+        recommended.push(m);
+      }
+    }
+    if (recommended.length) {
+      html += `<div class="home-section-title">Dnes doporučujeme</div>`;
+      for (const m of recommended) {
+        const cid = m.competition?.id;
+        const compName = COMP_NAMES[cid] || m.competition?.name || '';
+        const emb = compEmblems[cid];
+        const logoHtml = emb ? `<img style="width:14px;height:14px;object-fit:contain;margin-right:4px;vertical-align:middle;opacity:.7" src="${emb}" alt="">` : '';
+        html += `<div class="competition-tag">${logoHtml}${compName}</div>` + renderMatch(m);
+      }
+    }
+
+    // C) Moje týmy
+    const favTeams = getFavTeams();
+    if (favTeams.length) {
+      html += `<div class="home-section-title">⭐ Moje týmy</div><div class="fav-list">`;
+      html += favTeams.map(t => `
+        <div class="fav-item" onclick="openTeamPanel(${t.id},'${escHtml(t.name)}','${escHtml(t.crest||'')}')">
+          ${t.crest ? `<img class="fav-logo" src="${escHtml(t.crest)}" alt="" onerror="this.style.display='none'">` : `<span class="fav-logo-placeholder">${t.name[0]}</span>`}
+          <span class="fav-name">${t.name}</span>
+          <button class="fav-remove" onclick="event.stopPropagation();removeFavTeamAndRefresh(${t.id})" title="Odebrat">×</button>
+        </div>`).join('');
+      html += `</div>`;
+    }
+
+    // D) Moje ligy
+    const favLeagues = getFavLeagues();
+    if (favLeagues.length) {
+      html += `<div class="home-section-title">📌 Moje ligy</div><div class="fav-list">`;
+      html += favLeagues.map(l => {
+        const emb = compEmblems[l.id] || l.emblem || '';
+        return `
+        <div class="fav-item" onclick="goToLeague(${l.id})">
+          ${emb ? `<img class="fav-logo" src="${escHtml(emb)}" alt="" onerror="this.style.display='none'">` : `<span class="fav-logo-placeholder">${l.name[0]}</span>`}
+          <span class="fav-name">${l.name}</span>
+          <button class="fav-remove" onclick="event.stopPropagation();removeFavLeagueAndRefresh(${l.id})" title="Odebrat">×</button>
+        </div>`;
+      }).join('');
+      html += `</div>`;
+    }
+
+    // E) Všechny soutěže
+    const favLeagueIds = new Set(getFavLeagues().map(l => l.id));
+    const atLimit = getFavLeagues().length >= 5;
+    html += `<div class="home-section-title">Všechny soutěže</div><div class="fav-list">`;
+    html += FULL_COMPS.map(c => {
+      const isFav = favLeagueIds.has(c.id);
+      const emb = compEmblems[c.id] || '';
+      return `
+        <div class="fav-item" style="cursor:default">
+          ${emb ? `<img class="fav-logo" src="${escHtml(emb)}" alt="" onerror="this.style.display='none'">` : `<span class="fav-logo-placeholder">${c.name[0]}</span>`}
+          <span class="fav-name" style="cursor:pointer" onclick="goToLeague(${c.id})">${c.name}</span>
+          <button class="fav-star${isFav?' fav-star-active':''}"
+            ${!isFav && atLimit ? 'disabled' : ''}
+            onclick="toggleFavLeagueHome(${c.id},'${escHtml(c.name)}')"
+            title="${isFav?'Odebrat z oblíbených':'Přidat do oblíbených'}"
+          >${isFav?'★':'☆'}</button>
+        </div>`;
+    }).join('');
+    html += `</div>`;
+
+    col.innerHTML = html;
+  }
+
+  function removeFavTeamAndRefresh(id) { removeFavTeam(id); renderHomeTab(); }
+  function removeFavLeagueAndRefresh(id) { removeFavLeague(id); renderHomeTab(); }
+
+  function toggleFavLeagueHome(id, name) {
+    if (isFavLeague(id)) removeFavLeague(id);
+    else addFavLeague(id, name, compEmblems[id]||'');
+    renderHomeTab();
+    const comp = FULL_COMPS.find(c => c.id === id);
+    if (comp) {
+      const btn = document.getElementById(`comp-star-${comp.key}`);
+      if (btn) { const a = isFavLeague(id); btn.classList.toggle('active',a); btn.textContent = a?'★':'☆'; }
+    }
+  }
+
+  function goToLeague(compId) {
+    const comp = FULL_COMPS.find(c => c.id === compId);
+    if (!comp) return;
+    switchTab('tables');
+    setTimeout(() => {
+      expandCompetition(compId, comp.key, comp.cup);
+      setTimeout(() => { const el = document.getElementById(`card-${comp.key}`); if (el) el.scrollIntoView({behavior:'smooth',block:'start'}); }, 200);
+    }, 50);
+  }
+
+  // ── DNES TAB ─────────────────────────────────────────────────
+  function renderMatchesForTab() {
+    const col = document.getElementById('matches-col');
+    const matches = allTodayMatches;
+
     if (!matches.length) {
-      const msg = currentTab === 'live'
-        ? 'Momentálně nejsou žádné živé zápasy.'
-        : 'Dnes nejsou žádné zápasy.';
-      col.innerHTML = `<div class="no-matches">${msg}</div>`;
+      col.innerHTML = `<div class="no-matches">Dnes nejsou žádné zápasy.</div>`;
       return;
     }
 
-    const liveFirst = (a, b) => (['IN_PLAY','PAUSED'].includes(a.status)?0:1) - (['IN_PLAY','PAUSED'].includes(b.status)?0:1);
+    const liveFirst = (a,b) => (['IN_PLAY','PAUSED'].includes(a.status)?0:1) - (['IN_PLAY','PAUSED'].includes(b.status)?0:1);
     const groups = {};
     for (const m of matches) {
       const key = m.competition?.id || 0;
@@ -1109,7 +1357,8 @@
       const today = new Date().toISOString().split('T')[0];
       const data = await apiFetch(`/matches?date=${today}`);
       allTodayMatches = data.matches || [];
-      renderMatchesForTab();
+      if (currentTab === 'live') renderHomeTab();
+      else if (currentTab === 'dnes') renderMatchesForTab();
       updateTicker(allTodayMatches);
     } catch (e) {
       col.innerHTML = `<div class="error-msg">Nepodařilo se načíst data.<br><small>Spusť: <strong>node server.js</strong></small><br><small style="opacity:.6">${e.message}</small></div>`;
@@ -1185,10 +1434,24 @@
             <div class="comp-logo-placeholder" id="logopl-${c.key}">${c.name[0]}</div>
             <span class="comp-card-name">${c.name}</span>
           </div>
-          <i class="chevron" id="chevron-${c.key}">▼</i>
+          <div style="display:flex;align-items:center;gap:4px" onclick="event.stopPropagation()">
+            <button class="comp-star-btn${isFavLeague(c.id)?' active':''}" id="comp-star-${c.key}"
+              onclick="toggleCompStar(${c.id},'${escHtml(c.name)}','${c.key}')"
+              title="${isFavLeague(c.id)?'Odebrat z oblíbených':'Přidat do oblíbených'}"
+            >${isFavLeague(c.id)?'★':'☆'}</button>
+            <i class="chevron" id="chevron-${c.key}">▼</i>
+          </div>
         </div>
         <div class="comp-body" id="cbody-${c.key}" style="display:none"></div>
       </div>`).join('');
+  }
+
+  function toggleCompStar(compId, name, key) {
+    if (isFavLeague(compId)) removeFavLeague(compId);
+    else addFavLeague(compId, name, compEmblems[compId]||'');
+    const btn = document.getElementById(`comp-star-${key}`);
+    if (btn) { const a = isFavLeague(compId); btn.classList.toggle('active',a); btn.textContent = a?'★':'☆'; btn.title = a?'Odebrat z oblíbených':'Přidat do oblíbených'; }
+    if (currentTab === 'live') renderHomeTab();
   }
 
   async function expandCompetition(compId, key, isCup) {
@@ -1253,15 +1516,23 @@
     try {
       const data = await apiFetch(`/standings?id=${compId}`);
 
-      // Aktualizuj logo soutěže z API
-      if (cardKey && data.competition?.emblem) {
-        const logoImg = document.getElementById(`logo-${cardKey}`);
-        const logoPl  = document.getElementById(`logopl-${cardKey}`);
-        if (logoImg) { logoImg.src = data.competition.emblem; logoImg.style.display = 'block'; }
-        if (logoPl)  logoPl.style.display = 'none';
+      // Cache emblémy + aktualizuj logo
+      if (data.competition?.emblem) {
+        compEmblems[compId] = data.competition.emblem;
+        if (cardKey) {
+          const logoImg = document.getElementById(`logo-${cardKey}`);
+          const logoPl  = document.getElementById(`logopl-${cardKey}`);
+          if (logoImg) { logoImg.src = data.competition.emblem; logoImg.style.display = 'block'; }
+          if (logoPl)  logoPl.style.display = 'none';
+        }
       }
 
       const standing = data.standings?.find(s => s.type === 'TOTAL');
+      if (standing) {
+        searchTeamsCache[compId] = standing.table.map(row => ({
+          id: row.team?.id, name: row.team?.name||'', shortName: row.team?.shortName||'', crest: row.team?.crest||''
+        }));
+      }
       if (!standing) { el.innerHTML = '<div class="no-matches">Není k dispozici</div>'; return; }
 
       const table = standing.table;
@@ -1433,6 +1704,10 @@
   async function openTeamPanel(teamId, teamName, teamCrestUrl) {
     if (!teamId) return;
 
+    panelTeamId    = teamId;
+    panelTeamName  = teamName;
+    panelTeamCrest = teamCrestUrl;
+
     const overlay = document.getElementById('team-panel-overlay');
     overlay.classList.add('open');
     document.body.style.overflow = 'hidden';
@@ -1445,6 +1720,15 @@
       : `<div class="team-crest-placeholder" style="width:44px;height:44px;font-size:16px">${teamName[0]}</div>`;
 
     identity.innerHTML = `${crestImg}<span class="team-panel-name">${teamName}</span>`;
+
+    const favBtn = document.getElementById('panel-fav-btn');
+    if (favBtn) {
+      const fav = isFavTeam(teamId);
+      favBtn.textContent = fav ? '⭐' : '☆';
+      favBtn.classList.toggle('active', fav);
+      favBtn.title = fav ? 'Odebrat z oblíbených' : 'Přidat do oblíbených';
+    }
+
     body.innerHTML = '<div class="loading"><div class="spinner"></div>Načítám...</div>';
 
     try {
@@ -1544,10 +1828,75 @@
     document.body.style.overflow = '';
   }
 
+  function togglePanelFav() {
+    if (!panelTeamId) return;
+    if (isFavTeam(panelTeamId)) removeFavTeam(panelTeamId);
+    else if (getFavTeams().length < 5) addFavTeam(panelTeamId, panelTeamName, panelTeamCrest);
+    const btn = document.getElementById('panel-fav-btn');
+    if (btn) { const fav = isFavTeam(panelTeamId); btn.textContent = fav?'⭐':'☆'; btn.classList.toggle('active',fav); btn.title = fav?'Odebrat z oblíbených':'Přidat do oblíbených'; }
+    if (currentTab === 'live') renderHomeTab();
+  }
+
+  // ── VYHLEDÁVÁNÍ ───────────────────────────────────────────────
+  function debounce(fn, delay) { let t; return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), delay); }; }
+  const debouncedSearch = debounce(doSearch, 200);
+
+  function openSearch() {
+    document.getElementById('search-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => document.getElementById('search-input').focus(), 50);
+  }
+
+  function closeSearch() {
+    document.getElementById('search-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+    document.getElementById('search-input').value = '';
+    document.getElementById('search-results').innerHTML = '';
+  }
+
+  function doSearch() {
+    const q = (document.getElementById('search-input').value || '').trim().toLowerCase();
+    const results = document.getElementById('search-results');
+    if (q.length < 2) { results.innerHTML = ''; return; }
+
+    let html = '';
+    for (const c of FULL_COMPS) {
+      if (c.name.toLowerCase().includes(q)) {
+        const emb = compEmblems[c.id];
+        html += `<div class="search-result" onclick="searchGoToLeague(${c.id})">
+          ${emb ? `<img class="search-result-logo" src="${emb}" alt="">` : `<span class="search-result-placeholder">${c.name[0]}</span>`}
+          <span class="search-result-name">${c.name}</span>
+          <span class="search-result-type">Soutěž</span>
+        </div>`;
+      }
+    }
+    for (const [, teams] of Object.entries(searchTeamsCache)) {
+      for (const t of teams) {
+        if (!t.id) continue;
+        const nm = (t.name + ' ' + (t.shortName||'')).toLowerCase();
+        if (nm.includes(q)) {
+          html += `<div class="search-result" onclick="searchGoToTeam(${t.id},'${escHtml(t.name)}','${escHtml(t.crest)}')">
+            ${t.crest ? `<img class="search-result-logo" src="${t.crest}" alt="">` : `<span class="search-result-placeholder">${t.name[0]||'?'}</span>`}
+            <span class="search-result-name">${t.name}</span>
+            <span class="search-result-type">Tým</span>
+          </div>`;
+        }
+      }
+    }
+    if (!html) {
+      const hasData = Object.keys(searchTeamsCache).length > 0;
+      html = `<div class="search-no-results">${hasData ? `Žádné výsledky pro „${q}"` : `Žádné výsledky. Pro hledání týmů otevři nejprve Tabulky.`}</div>`;
+    }
+    results.innerHTML = html;
+  }
+
+  function searchGoToLeague(compId) { closeSearch(); goToLeague(compId); }
+  function searchGoToTeam(id, name, crest) { closeSearch(); openTeamPanel(id, name, crest); }
+
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
-      closeTeamPanel();
-      closeModal();
+      if (document.getElementById('search-overlay').classList.contains('open')) closeSearch();
+      else { closeTeamPanel(); closeModal(); }
     }
   });
 
