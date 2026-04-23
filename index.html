@@ -796,13 +796,8 @@
     .panel-fav-btn:hover { border-color: rgba(234,179,8,0.4); color: #eab308; }
     .panel-fav-btn.active { border-color: rgba(234,179,8,0.5); color: #eab308; }
 
-    /* Lupa v headeru */
-    .header-search-btn {
-      background: none; border: 1px solid var(--border); color: var(--muted);
-      width: 34px; height: 34px; border-radius: 6px; cursor: pointer; font-size: 16px;
-      display: flex; align-items: center; justify-content: center; transition: all 0.15s; flex-shrink: 0;
-    }
-    .header-search-btn:hover { border-color: rgba(255,255,255,0.2); color: #fff; }
+    /* Lupa v headeru – dědí vše z .header-tab, jen přepíše barvu */
+    .header-search-btn { color: #fff; }
 
     /* ── SEARCH OVERLAY ── */
     .search-overlay {
@@ -935,8 +930,8 @@
     <button class="header-tab tab-live active" id="tab-live" onclick="switchTab('live')">Home</button>
     <button class="header-tab" id="tab-dnes" onclick="switchTab('dnes')">Dnes</button>
     <button class="header-tab" id="tab-tables" onclick="switchTab('tables')">Tabulky</button>
+    <button class="header-tab header-search-btn" onclick="openSearch()" title="Hledat">🔍</button>
   </div>
-  <button class="header-search-btn" onclick="openSearch()" title="Hledat">🔍</button>
 </header>
 
 <div class="ticker">

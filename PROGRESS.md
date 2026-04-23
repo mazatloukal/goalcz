@@ -35,7 +35,7 @@
   - Home sekce: 🔴 ŽIVĚ (max 5), Dnes doporučujeme (top 5 dle priority), ⭐ Moje týmy, 📌 Moje ligy, Všechny soutěže
   - Oblíbené týmy/ligy uloženy v localStorage (goalcz_fav_teams, goalcz_fav_leagues, max 5)
   - Hvězdička v team panelu a v accordion kartě ligy (Tabulky view)
-  - Vyhledávání: lupa v headeru + mobil spodní nav → fullscreen overlay, hledá soutěže i týmy (z cache standings)
+  - Vyhledávání: lupa v header-tabs (stejný styl jako ostatní taby) + mobil spodní nav → fullscreen overlay, hledá soutěže i týmy (z cache standings)
   - compEmblems cache: logotypy soutěží dostupné pro Home sekce po načtení tabulek
   - Pavouk přepracován na horizontální bracket s CSS linkami
   - Sloupce zleva doprava: KO Play-off → Osmifinále → Čtvrtfinále → Semifinále → Finále
