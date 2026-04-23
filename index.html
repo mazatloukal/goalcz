@@ -1432,9 +1432,9 @@
             <div class="comp-logo-placeholder" id="logopl-${c.key}">${c.name[0]}</div>
             <span class="comp-card-name">${c.name}</span>
           </div>
-          <div style="display:flex;align-items:center;gap:4px" onclick="event.stopPropagation()">
+          <div style="display:flex;align-items:center;gap:4px">
             <button class="comp-star-btn${isFavLeague(c.id)?' active':''}" id="comp-star-${c.key}"
-              onclick="toggleCompStar(${c.id},'${escHtml(c.name)}','${c.key}')"
+              onclick="event.stopPropagation();toggleCompStar(${c.id},'${escHtml(c.name)}','${c.key}')"
               title="${isFavLeague(c.id)?'Odebrat z oblíbených':'Přidat do oblíbených'}"
             >${isFavLeague(c.id)?'★':'☆'}</button>
             <i class="chevron" id="chevron-${c.key}">▼</i>
