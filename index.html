@@ -1851,12 +1851,10 @@
       try {
         const data = await apiFetch(`/standings?id=${id}`);
         if (data.competition?.emblem) compEmblems[id] = data.competition.emblem;
-        const standing = data.standings?.find(s => s.type === 'TOTAL');
-        if (standing) {
-          searchTeamsCache[id] = standing.table.map(row => ({
-            id: row.team?.id, name: row.team?.name||'', shortName: row.team?.shortName||'', crest: row.team?.crest||''
-          }));
-        }
+        const table = data.standings?.find(s => s.type === 'TOTAL')?.table || data.standings?.[0]?.table || [];
+        searchTeamsCache[id] = table.map(row => ({
+          id: row.team?.id, name: row.team?.name||'', shortName: row.team?.shortName||'', crest: row.team?.crest||''
+        }));
       } catch {}
     }));
     searchTeamsLoading = false;
@@ -1892,9 +1890,11 @@
         </div>`;
       }
     }
+    const seen = new Set();
     for (const [, teams] of Object.entries(searchTeamsCache)) {
       for (const t of teams) {
-        if (!t.id) continue;
+        if (!t.id || seen.has(t.id)) continue;
+        seen.add(t.id);
         const nm = (t.name + ' ' + (t.shortName||'')).toLowerCase();
         if (nm.includes(q)) {
           html += `<div class="search-result" onclick="searchGoToTeam(${t.id},'${escHtml(t.name)}','${escHtml(t.crest)}')">
