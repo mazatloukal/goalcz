@@ -42,6 +42,11 @@
   - Každý zápas jako karta: logo | název týmu, skóre uprostřed, winner tučně bíle
   - CSS border-based konektory (vertikální čára + horizontální rameno) mezi koly
   - Horizontální scroll na mobilech (overflow-x: auto)
+- **Rozšíření lig (2026-04-23):**
+  - Přidány 4 nové ligy do Tabulky view: Primeira Liga (POR, 2017), Eredivisie (NED, 2003), Championship (ENG2, 2016), Série A Brasil (BRA, 2013)
+  - EURO_SPOTS a RELEGATION doplněny pro nové ligy
+  - Search teams cache rozšířena o nová ID
+  - PRIO_COMPS aktualizováno (nové ligy zařazeny za Big 5)
 
 ## Aktuální stav
 Projekt běží na Railway.app (online).
@@ -50,7 +55,8 @@ Pro lokální vývoj: `node server.js`, pak otevřít v prohlížeči.
 ## Technické poznámky
 - CORS problém řeší server.js jako proxy — přímé volání API z prohlížeče nefunguje
 - API klíč: uložen v .env jako API_KEY (football-data.org free tier)
-- Liga ID: PL=2021, BL=2002, La Liga=2014, SA=2019, L1=2015, UCL=2001, UEL=2018, UECL=2017
+- Liga ID: PL=2021, BL=2002, La Liga=2014, SA(ITA)=2019, L1=2015, UCL=2001, UEL=2018, PPL=2017, DED=2003, ELC=2016, BSA=2013
+- UECL (Liga konferencí) odebrána z FULL_COMPS — na free tieru není dostupná; ID 2017 je správně Primeira Liga
 - Barvy: zelená = pohárová Evropa/výhra, červená = sestup/prohra, žlutá = remíza
 
 ## Další kroky (nápady)

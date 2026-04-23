@@ -1112,10 +1112,10 @@
 
 <script>
   const SERVER = '';
-  const COMP_NAMES = { 2021:'Premier League', 2002:'Bundesliga', 2014:'La Liga', 2019:'Serie A', 2015:'Ligue 1', 2001:'Liga mistrů', 2017:'Liga konferencí', 2018:'Liga Evropy' };
-  const EURO_SPOTS  = { 2021:4, 2002:4, 2014:4, 2019:4, 2015:3 };
-  const RELEGATION  = { 2021:3, 2002:3, 2014:3, 2019:3, 2015:3 };
-  const PRIO_COMPS  = [2001,2018,2017,2021,2014,2002,2019,2015];
+  const COMP_NAMES = { 2021:'Premier League', 2002:'Bundesliga', 2014:'La Liga', 2019:'Serie A', 2015:'Ligue 1', 2001:'Liga mistrů', 2017:'Primeira Liga', 2003:'Eredivisie', 2016:'Championship', 2013:'Série A (BRA)', 2018:'Liga Evropy' };
+  const EURO_SPOTS  = { 2021:4, 2002:4, 2014:4, 2019:4, 2015:3, 2017:4, 2003:5, 2016:2, 2013:6 };
+  const RELEGATION  = { 2021:3, 2002:3, 2014:3, 2019:3, 2015:3, 2017:2, 2003:2, 2016:3, 2013:4 };
+  const PRIO_COMPS  = [2001,2018,2021,2014,2002,2019,2015,2017,2003,2016,2013];
 
   let currentTab = 'live';
   let allTodayMatches = [];
@@ -1413,9 +1413,12 @@
     { id: 2014, name: 'La Liga',         key: 'll-full',   cup: false },
     { id: 2019, name: 'Serie A',         key: 'sa-full',   cup: false },
     { id: 2015, name: 'Ligue 1',         key: 'l1-full',   cup: false },
+    { id: 2017, name: 'Primeira Liga',   key: 'ppl-full',  cup: false },
+    { id: 2003, name: 'Eredivisie',      key: 'ded-full',  cup: false },
+    { id: 2016, name: 'Championship',    key: 'elc-full',  cup: false },
+    { id: 2013, name: 'Série A (BRA)',   key: 'bsa-full',  cup: false },
     { id: 2001, name: 'Liga mistrů',     key: 'ucl-full',  cup: true  },
     { id: 2018, name: 'Liga Evropy',     key: 'uel-full',  cup: true  },
-    { id: 2017, name: 'Liga konferencí', key: 'uecl-full', cup: true  },
   ];
 
   // Sledování načtených soutěží a aktivní fáze
@@ -1878,7 +1881,7 @@
   async function loadSearchTeams() {
     if (searchTeamsLoading) return;
     searchTeamsLoading = true;
-    const ids = [2001, 2002, 2014, 2015, 2017, 2018, 2019, 2021];
+    const ids = [2001, 2002, 2003, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2021];
     const missing = ids.filter(id => !searchTeamsCache[id]);
     if (!missing.length) return;
     await Promise.all(missing.map(async id => {
