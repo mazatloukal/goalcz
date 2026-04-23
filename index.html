@@ -1162,6 +1162,7 @@
       viewMatches.style.display = 'none';
       viewTables.style.display  = '';
       if (!tablesLoaded) loadFullTables();
+      preloadCompLogos();
     } else {
       viewMatches.style.display = '';
       viewTables.style.display  = 'none';
@@ -1428,8 +1429,8 @@
       <div class="comp-card" id="card-${c.key}">
         <div class="comp-card-header" onclick="expandCompetition(${c.id},'${c.key}',${c.cup})">
           <div style="display:flex;align-items:center;gap:14px">
-            <img class="comp-logo" id="logo-${c.key}" src="" alt="${c.name}" style="display:none" onerror="this.style.display='none'">
-            <div class="comp-logo-placeholder" id="logopl-${c.key}">${c.name[0]}</div>
+            <img class="comp-logo" id="logo-${c.key}" src="${compEmblems[c.id]||''}" alt="${c.name}" style="${compEmblems[c.id]?'':'display:none'}" onerror="this.style.display='none'">
+            <div class="comp-logo-placeholder" id="logopl-${c.key}" style="${compEmblems[c.id]?'display:none':''}">${c.name[0]}</div>
             <span class="comp-card-name">${c.name}</span>
           </div>
           <div style="display:flex;align-items:center;gap:4px">
@@ -1442,6 +1443,39 @@
         </div>
         <div class="comp-body" id="cbody-${c.key}" style="display:none"></div>
       </div>`).join('');
+  }
+
+  function updateCompLogo(key, emblemUrl) {
+    const logoImg = document.getElementById(`logo-${key}`);
+    const logoPl  = document.getElementById(`logopl-${key}`);
+    if (logoImg && emblemUrl) {
+      logoImg.src = emblemUrl;
+      logoImg.style.display = 'block';
+      if (logoPl) logoPl.style.display = 'none';
+    }
+  }
+
+  async function preloadCompLogos() {
+    for (const c of FULL_COMPS) {
+      if (compEmblems[c.id]) {
+        updateCompLogo(c.key, compEmblems[c.id]);
+        continue;
+      }
+      try {
+        const data = await apiFetch(`/standings?id=${c.id}`);
+        if (data.competition?.emblem) {
+          compEmblems[c.id] = data.competition.emblem;
+          updateCompLogo(c.key, data.competition.emblem);
+          const standing = data.standings?.find(s => s.type === 'TOTAL');
+          if (standing && !searchTeamsCache[c.id]) {
+            searchTeamsCache[c.id] = standing.table.map(row => ({
+              id: row.team?.id, name: row.team?.name||'', crest: row.team?.crest||''
+            }));
+          }
+        }
+      } catch(e) {}
+      await new Promise(r => setTimeout(r, 300));
+    }
   }
 
   function toggleCompStar(compId, name, key) {
